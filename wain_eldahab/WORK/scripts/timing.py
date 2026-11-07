@@ -129,6 +129,20 @@ S["S07"]["cut"]["at"] = anchor("S07", 64.0)              # N6 photo on «من أ
 S["S07"]["sfx"] = ["whoosh@%s" % S["S07"]["cut"]["at"], "stones@%s" % anchor("S07", 67.4)]
 
 S["S12"]["end_times"] = [anchor("S12", 102.5), anchor("S12", 106.4), anchor("S12", 108.3)]
+# ---- outro: social accounts (appended after the end card) ----
+OUTRO = 5.0
+_o0 = DURATION
+SCENES.append(dict(id="S13", t0=_o0, t1=round(_o0 + OUTRO, 2), k=1.0, kind="outro",
+    scene_desc="أوترو: شعار السلسلة + حسابات التواصل (فيسبوك، إنستغرام، تيك توك، يوتيوب)",
+    vo="", perf="—", pause="—",
+    sfx=["whoosh@%s" % _o0] + ["ping@%s" % round(_o0 + .9 + i * .35, 2) for i in range(4)]))
+DURATION = round(_o0 + OUTRO, 2)
+SOCIAL = [  # (platform, handle shown on screen) — from the presenter
+    ("youtube", "@husammustafaa"),
+    ("tiktok", "@husamfabrey"),
+    ("instagram", "@husam_mustafaa"),
+    ("facebook", "الرابط في وصف الفيديو"),
+]
 CUES = [(round(dst(a), 2), round(dst(b), 2), tx) for _, tx, a, b in ALIGN]
 
 if __name__ == "__main__":
