@@ -161,7 +161,16 @@ Asset_Sources_and_Licenses — «وين الدهب؟»
 
 ب) الخرائط: رسم خاص (عمل أصلي) ببيانات خطوط السواحل والحدود والأنهار المدمجة في مكتبة Basemap
    (GSHHG / Natural Earth، ملك عام / مرخصة للاستخدام الحر). EXTERNAL_RESEARCH/MAPS/base_map.png
-ج) الموسيقى والمؤثرات الصوتية: مولّدة برمجيًا من الصفر (WORK/scripts/make_audio.py) — عمل أصلي، لا تراخيص خارجية.
+ج) الموسيقى الخلفية (النسخة النهائية):
+   «Curse of the Scarab» — Kevin MacLeod (incompetech.com) — ترخيص CC BY 3.0 (يسمح بالاستخدام التجاري مع ذكر الاسم)
+   https://commons.wikimedia.org/wiki/File:Curse_of_the_Scarab_(ISRC_USUAN1600014).mp3
+   الملف: EXTERNAL_RESEARCH/MUSIC/licensed/M02_curse_of_the_scarab.ogg (مقطع من الدقيقة 0:10 تقريبًا، مع خفض تلقائي تحت الصوت)
+   صيغة الإسناد المطلوبة في وصف المنشور:
+     "Curse of the Scarab" Kevin MacLeod (incompetech.com) — Licensed under Creative Commons: By Attribution 3.0
+     http://creativecommons.org/licenses/by/3.0/
+   ملاحظة: موسيقى Kevin MacLeod مرخصة حرًا، لكن أنظمة كشف الحقوق قد تُظهر أحيانًا مطالبة خاطئة؛ يكفي الاعتراض بذكر الترخيص.
+   مقطوعات بديلة منزّلة (غير مستخدمة): Desert City، Tabuk — نفس المؤلف ونفس الترخيص.
+   المؤثرات الصوتية (رياح، انتقالات، ضربات، عدّاد): مولّدة برمجيًا من الصفر — عمل أصلي.
 د) الخطوط: Cairo و Amiri من Google Fonts — رخصة SIL Open Font License 1.1 (مسموح الاستخدام التجاري).
 هـ) صورة المقدم: مقدمة من صاحب المشروع (ORIGINAL_PHOTOS/presenter_photo.jpg)، استُخدمت دون تعديل (قص وتحجيم فقط).
 
@@ -180,4 +189,5 @@ Photos via Wikimedia Commons:
 • K.R. Lepsius — CC0 — https://commons.wikimedia.org/wiki/File:Amanishakheto.jpg
 • Einsamer Schütze — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_02.jpg
 • Einsamer Schütze — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_03.jpg
-Maps, music & sound design: original work. Fonts: Cairo (SIL OFL).
+Music: "Curse of the Scarab" Kevin MacLeod (incompetech.com) — CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+Maps & sound design: original work. Fonts: Cairo (SIL OFL).
