@@ -1,0 +1,194 @@
+Asset_Sources_and_Licenses — «وين الدهب؟»
+تاريخ: 2026-11-06
+======================================================================
+
+أ) الصور (جميعها من Wikimedia Commons، تراخيص حرة؛ لا توجد أي مادة من AFP؛ لا علامات مائية)
+   ترتيب الأعمدة: الملف المحلي | العنوان على Commons | المؤلف | الترخيص | رابط الصفحة | مستخدم في الفيديو؟
+
+- P01_meroe_portrait_ahmed_amir.jpg
+    Commons: File:Pyramids of Meroe in Bajrawiya, Sudan 04.jpg
+    المؤلف/المصدر: Ahmed Amir
+    الترخيص: CC BY-SA 4.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_04.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_04.jpg/1920px-Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_04.jpg
+    الوصف: Those are pictures of the pyramids of Meroe located in Bajrawiya, Sudan
+    الاستخدام: نعم
+
+- P02_meroe_wide_ahmed_amir.jpg
+    Commons: File:Pyramids of Meroe in Bajrawiya, Sudan 09.jpg
+    المؤلف/المصدر: Ahmed Amir
+    الترخيص: CC BY-SA 4.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_09.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_09.jpg/1920px-Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_09.jpg
+    الوصف: Those are pictures of the pyramids of Meroe located in Bajrawiya, Sudan
+    الاستخدام: نعم
+
+- P03_meroe_ahmed_amir.jpg
+    Commons: File:Pyramids of Meroe in Bajrawiya, Sudan 13.jpg
+    المؤلف/المصدر: Ahmed Amir
+    الترخيص: CC BY-SA 4.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_13.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_13.jpg/1920px-Pyramids_of_Meroe_in_Bajrawiya%2C_Sudan_13.jpg
+    الوصف: Those are pictures of the pyramids of Meroe located in Bajrawiya, Sudan
+    الاستخدام: نعم
+
+- P04_meroe_de_walick.jpg
+    Commons: File:Meroe Pyramids - 33110830248.jpg
+    المؤلف/المصدر: Laurent de Walick
+    الترخيص: CC BY 2.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Meroe_Pyramids_-_33110830248.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Meroe_Pyramids_-_33110830248.jpg/1920px-Meroe_Pyramids_-_33110830248.jpg
+    الوصف: Meroe Pyramids - 33110830248
+    الاستخدام: نعم
+
+- P05_meroe_de_walick_2.jpg
+    Commons: File:Meroe Pyramids - 33110830438.jpg
+    المؤلف/المصدر: Laurent de Walick
+    الترخيص: CC BY 2.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Meroe_Pyramids_-_33110830438.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Meroe_Pyramids_-_33110830438.jpg/1920px-Meroe_Pyramids_-_33110830438.jpg
+    الوصف: Meroe Pyramids - 33110830438
+    الاستخدام: نعم
+
+- P06_meroe_camels_nilsen.jpg
+    Commons: File:Meröe Pyramids with camles (35119048185).jpg
+    المؤلف/المصدر: Hans Birger Nilsen
+    الترخيص: CC BY-SA 2.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Mer%C3%B6e_Pyramids_with_camles_(35119048185).jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Mer%C3%B6e_Pyramids_with_camles_%2835119048185%29.jpg/1920px-Mer%C3%B6e_Pyramids_with_camles_%2835119048185%29.jpg
+    الوصف: Meröe Pyramids with camles
+    الاستخدام: نعم
+
+- P07_meroe_dbxsoul.jpg
+    Commons: File:Pyramids at Meroe - Sudan.jpg
+    المؤلف/المصدر: Dbxsoul
+    الترخيص: CC BY 3.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Pyramids_at_Meroe_-_Sudan.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Pyramids_at_Meroe_-_Sudan.jpg/1920px-Pyramids_at_Meroe_-_Sudan.jpg
+    الوصف: Pyramid - Meroe - Sudan
+    الاستخدام: نعم
+
+- H01_cailliaud_1821.jpg
+    Commons: File:Nubian pyramids of Meroe in 1821.jpg
+    المؤلف/المصدر: Cailliaud, Frédéric in 1826
+    الترخيص: Public domain
+    الصفحة: https://commons.wikimedia.org/wiki/File:Nubian_pyramids_of_Meroe_in_1821.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Nubian_pyramids_of_Meroe_in_1821.jpg/1920px-Nubian_pyramids_of_Meroe_in_1821.jpg
+    الوصف: Nubian pyramids in 1821
+    الاستخدام: نعم
+
+- H02_ferlini_portrait.jpg
+    Commons: File:Giuseppe Ferlini.jpg
+    المؤلف/المصدر: Unknown authorUnknown author
+    الترخيص: Public domain
+    الصفحة: https://commons.wikimedia.org/wiki/File:Giuseppe_Ferlini.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/0/0f/Giuseppe_Ferlini.jpg
+    الوصف: Photographie médaillon de Giuseppe Ferlini  (23 avril 1797 – 30 décembre 1870), médecin de combat italien deve
+    الاستخدام: نعم
+
+- H03_meroe_N6_trackhd.jpg
+    Commons: File:Meroe N6.JPG
+    المؤلف/المصدر: TrackHD
+    الترخيص: CC BY-SA 3.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Meroe_N6.JPG
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Meroe_N6.JPG/1920px-Meroe_N6.JPG
+    الوصف: Pylon des Pyramidentempels der Kandake Amanishakheto
+    الاستخدام: نعم
+
+- H04_amanishakheto_lepsius.jpg
+    Commons: File:Amanishakheto.jpg
+    المؤلف/المصدر: K.R. Lepsius
+    الترخيص: CC0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Amanishakheto.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Amanishakheto.jpg/500px-Amanishakheto.jpg
+    الوصف: Amanishakheto
+    الاستخدام: نعم
+
+- H05_amanishakheto_pylon_lepsius.jpg
+    Commons: File:Pilaar, graf Amanishakheto.jpg
+    المؤلف/المصدر: K.R. Lepsius
+    الترخيص: CC0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Pilaar,_graf_Amanishakheto.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Pilaar%2C_graf_Amanishakheto.jpg/1280px-Pilaar%2C_graf_Amanishakheto.jpg
+    الوصف: Pilaar, graf Amanishakheto
+    الاستخدام: لا (احتياطي)
+
+- T01_jewellery_02.jpg
+    Commons: File:Amanishakheto Jewellery 02.jpg
+    المؤلف/المصدر: Einsamer Schütze
+    الترخيص: CC BY-SA 3.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_02.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Amanishakheto_Jewellery_02.jpg/1280px-Amanishakheto_Jewellery_02.jpg
+    الوصف: Jewellery of Amanishakheto from her pyramid at Meroe
+    الاستخدام: نعم
+
+- T02_jewellery_03.jpg
+    Commons: File:Amanishakheto Jewellery 03.jpg
+    المؤلف/المصدر: Einsamer Schütze
+    الترخيص: CC BY-SA 3.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_03.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Amanishakheto_Jewellery_03.jpg/1920px-Amanishakheto_Jewellery_03.jpg
+    الوصف: Jewellery of Amanishakheto from her pyramid at Meroe
+    الاستخدام: نعم
+
+- T03_berlin_tresor_03.jpg
+    Commons: File:Berlin Neues Museum - tresor de la reine Amanishakheto 03.jpg
+    المؤلف/المصدر: Neithsabes
+    الترخيص: CC BY-SA 3.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Berlin_Neues_Museum_-_tresor_de_la_reine_Amanishakheto_03.jpg
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Berlin_Neues_Museum_-_tresor_de_la_reine_Amanishakheto_03.jpg/500px-Berlin_Neues_Museum_-_tresor_de_la_reine_Amanishakheto_03.jpg
+    الوصف: Two views of a same ring in gold found in the treasury of the queen of Meroe, Amanishakheto
+    الاستخدام: لا (احتياطي)
+
+- T04_relief_munich.jpg
+    Commons: File:Relief Amanishakheto Munich.JPG
+    المؤلف/المصدر: Khruner
+    الترخيص: CC BY-SA 4.0
+    الصفحة: https://commons.wikimedia.org/wiki/File:Relief_Amanishakheto_Munich.JPG
+    الملف المنزّل: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Relief_Amanishakheto_Munich.JPG/960px-Relief_Amanishakheto_Munich.JPG
+    الوصف: Closeup of a stele depicting the Meroitic kandake Amanishakheto between the goddess Amesemi and the god Apedem
+    الاستخدام: لا (احتياطي)
+
+ملاحظات الترخيص المهمة:
+- CC BY / CC BY-SA: يجب ذكر اسم المؤلف والترخيص ورابط الترخيص. يظهر في الفيديو سطر صغير أعلى كل صورة،
+  ويُنصح بنسخ قسم «نص الوصف الجاهز» أدناه في وصف المنشور على فيسبوك.
+- CC BY-SA (شرط المشاركة بالمثل): تحريك الصور وتعديل ألوانها قد يُعدّ «عملًا مشتقًا» للصورة نفسها؛ الصور المعدّلة
+  تبقى تحت CC BY-SA. الاستخدام التجاري مسموح بهذه التراخيص. يُنصح بمراجعة مختص إذا كان الحساب تجاريًا بالكامل.
+- GFDL غير مستخدم. صور الملك العام (رسم كايو، صورة فرليني) لا تتطلب إذنًا.
+- صورة فرليني (H02): المؤلف مجهول ومصنّفة ملكًا عامًا على Commons؛ تبدو صورة لميدالية خزفية — يُرجى التأكد من هويتها.
+- تعذّر العثور على مقاطع فيديو مرخصة لمروي على Commons (لا توجد لقطات مناسبة)، لذلك استُخدمت حركة كاميرا على الصور.
+  لم تُستخدم لقطات صحراء من أماكن أخرى حتى لا تكون مضللة.
+
+ب) الخرائط: رسم خاص (عمل أصلي) ببيانات خطوط السواحل والحدود والأنهار المدمجة في مكتبة Basemap
+   (GSHHG / Natural Earth، ملك عام / مرخصة للاستخدام الحر). EXTERNAL_RESEARCH/MAPS/base_map.png
+ج) الموسيقى الخلفية (النسخة النهائية):
+   «Curse of the Scarab» — Kevin MacLeod (incompetech.com) — ترخيص CC BY 3.0 (يسمح بالاستخدام التجاري مع ذكر الاسم)
+   https://commons.wikimedia.org/wiki/File:Curse_of_the_Scarab_(ISRC_USUAN1600014).mp3
+   الملف: EXTERNAL_RESEARCH/MUSIC/licensed/M02_curse_of_the_scarab.ogg (مقطع من الدقيقة 0:10 تقريبًا، مع خفض تلقائي تحت الصوت)
+   صيغة الإسناد المطلوبة في وصف المنشور:
+     "Curse of the Scarab" Kevin MacLeod (incompetech.com) — Licensed under Creative Commons: By Attribution 3.0
+     http://creativecommons.org/licenses/by/3.0/
+   ملاحظة: موسيقى Kevin MacLeod مرخصة حرًا، لكن أنظمة كشف الحقوق قد تُظهر أحيانًا مطالبة خاطئة؛ يكفي الاعتراض بذكر الترخيص.
+   مقطوعات بديلة منزّلة (غير مستخدمة): Desert City، Tabuk — نفس المؤلف ونفس الترخيص.
+   المؤثرات الصوتية (رياح، انتقالات، ضربات، عدّاد): مولّدة برمجيًا من الصفر — عمل أصلي.
+ح) شعار السلسلة «وين الدهب؟»: تصميم أصلي خاص بالمشروع (LOGOS_AND_BRANDING/logo.png، logo_wordmark.png) — ملكك بالكامل.
+د) الخطوط: Cairo و Amiri من Google Fonts — رخصة SIL Open Font License 1.1 (مسموح الاستخدام التجاري).
+هـ) صورة المقدم: مقدمة من صاحب المشروع (ORIGINAL_PHOTOS/presenter_photo.jpg)، استُخدمت دون تعديل (قص وتحجيم فقط).
+
+و) نص الوصف الجاهز للمنشور (Credits):
+Photos via Wikimedia Commons:
+• Ahmed Amir — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_04.jpg
+• Ahmed Amir — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_09.jpg
+• Ahmed Amir — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Pyramids_of_Meroe_in_Bajrawiya,_Sudan_13.jpg
+• Laurent de Walick — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Meroe_Pyramids_-_33110830248.jpg
+• Laurent de Walick — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Meroe_Pyramids_-_33110830438.jpg
+• Hans Birger Nilsen — CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Mer%C3%B6e_Pyramids_with_camles_(35119048185).jpg
+• Dbxsoul — CC BY 3.0 — https://commons.wikimedia.org/wiki/File:Pyramids_at_Meroe_-_Sudan.jpg
+• Cailliaud, Frédéric in 1826 — Public domain — https://commons.wikimedia.org/wiki/File:Nubian_pyramids_of_Meroe_in_1821.jpg
+• Unknown authorUnknown author — Public domain — https://commons.wikimedia.org/wiki/File:Giuseppe_Ferlini.jpg
+• TrackHD — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Meroe_N6.JPG
+• K.R. Lepsius — CC0 — https://commons.wikimedia.org/wiki/File:Amanishakheto.jpg
+• Einsamer Schütze — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_02.jpg
+• Einsamer Schütze — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Amanishakheto_Jewellery_03.jpg
+Music: "Curse of the Scarab" Kevin MacLeod (incompetech.com) — CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+Maps & sound design: original work. Fonts: Cairo (SIL OFL).
