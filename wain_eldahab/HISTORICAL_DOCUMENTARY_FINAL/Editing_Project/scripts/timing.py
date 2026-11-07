@@ -32,11 +32,13 @@ ALIGN = [
  ("S10", "أو ستة", 91.52, 92.16),
  ("S11", "أما عالم الآثار الألماني ليبسيوس", 92.16, 94.66), ("S11", "فكتب عام 1844", 95.13, 97.30),
  ("S11", "أن اكتشافه جر الخراب على أهرامات كثيرة", 97.30, 101.06),
- ("S12", "الذهب اليوم في متاحف أوروبا…", 102.69, 104.49), ("S12", "فلمن يجب أن يكون؟", 104.49, 108.41),
+ ("S12", "الذهب اليوم في متاحف أوروبا…", 102.69, 104.49), ("S12", "فلمن يجب أن يكون؟", 106.40, 108.41),
  ("S12", "اكتب رأيك… وتابعنا", 108.41, 110.95),
 ]
 # false starts / retakes removed from the recording (src seconds)
-CUTS = [(0.0, 6.30), (17.75, 21.05), (37.22, 40.08), (54.90, 57.42), (81.85, 85.30), (SPEECH_END, 1e9)]
+CUTS = [(0.0, 6.30), (17.75, 21.05), (37.22, 40.08), (54.90, 57.42), (81.85, 85.30), (104.56, 106.40), (SPEECH_END, 1e9)]
+# silence inserted (src time, seconds) where a cut leaves no breathing room
+INSERTS = [(104.56, 0.45)]
 # silences in the recording (measured, src seconds) used for pause shortening
 SILENCES = [(8.07, 8.91), (10.81, 12.83), (14.00, 15.00), (22.32, 24.63), (29.80, 30.70), (33.85, 34.87),
             (44.26, 44.95), (48.86, 49.26), (59.71, 60.63), (63.26, 64.16), (66.10, 66.76), (68.70, 69.41),
@@ -68,13 +70,13 @@ EDL = build_edl()
 
 def dst(t):
     """source time -> edited-voiceover time (+LEAD = video time)"""
-    acc = 0.0
+    acc = sum(d for p, d in INSERTS if t >= p)
     for x, y in EDL:
         if t < x: return acc + LEAD
         if t <= y: return acc + (t - x) + LEAD
         acc += y - x
     return acc + LEAD
-VO_LEN = sum(y - x for x, y in EDL)
+VO_LEN = sum(y - x for x, y in EDL) + sum(d for _, d in INSERTS)
 
 # ---- new scene boundaries ----
 first = {}
@@ -126,7 +128,7 @@ S["S10"]["sfx"] = ["riser@%s" % S["S10"]["t0"], "ticks@%s-%s" % (round(S["S10"][
 S["S07"]["cut"]["at"] = anchor("S07", 64.0)              # N6 photo on «من أكبر أهرامات مروي»
 S["S07"]["sfx"] = ["whoosh@%s" % S["S07"]["cut"]["at"], "stones@%s" % anchor("S07", 67.4)]
 
-S["S12"]["end_times"] = [anchor("S12", 102.5), anchor("S12", 104.4), anchor("S12", 108.3)]
+S["S12"]["end_times"] = [anchor("S12", 102.5), anchor("S12", 106.4), anchor("S12", 108.3)]
 CUES = [(round(dst(a), 2), round(dst(b), 2), tx) for _, tx, a, b in ALIGN]
 
 if __name__ == "__main__":

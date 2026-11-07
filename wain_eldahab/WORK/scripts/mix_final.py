@@ -15,9 +15,9 @@ OFFSET = round(84.0 - end_card, 2)          # track's big section (≈84 s) land
 D = DURATION
 graph = (
  f"[1:a]atrim=start={OFFSET}:duration={D},asetpts=PTS-STARTPTS,aresample=48000,"
- f"afade=t=in:d=1.2,afade=t=out:st={D - 2.5}:d=2.5,volume=-9dB[mus];"
+ f"afade=t=in:d=1.2,afade=t=out:st={D - 2.5}:d=2.5,volume=-0.5dB[mus];"
  f"[2:a]aresample=48000,pan=stereo|c0=c0|c1=c0,apad=whole_dur={D},asplit=2[vo][key];"
- f"[mus][key]sidechaincompress=threshold=0.04:ratio=6:attack=60:release=650:knee=4:makeup=1[mduck];"
+ f"[mus][key]sidechaincompress=threshold=0.05:ratio=4:attack=50:release=500:knee=4:makeup=1[mduck];"
  f"[3:a]volume=-4dB[sfx];"
  f"[vo][mduck][sfx]amix=inputs=3:normalize=0:duration=first,atrim=duration={D}[pre]")
 def run(extra_af, outargs):
