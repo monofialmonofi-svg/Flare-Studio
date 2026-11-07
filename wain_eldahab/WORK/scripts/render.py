@@ -340,21 +340,40 @@ def scene_counter(t, sc):
         paste(bg, text_img("بحسب رواية فرليني نفسه", 56, "Cairo-Bold.ttf", fill=SAND), W / 2, 830, ease((t - rv - .3) / .4))
     return bg
 
+_logo = {}
+def logo(size):
+    if size not in _logo:
+        im = Image.open(os.path.join(ROOT, "LOGOS_AND_BRANDING", "logo.png")).convert("RGBA")
+        _logo[size] = im.resize((size, size), Image.LANCZOS)
+    return _logo[size]
+
 def scene_end(t, sc):
     t0, t1 = sc["t0"], sc["t1"]
     e1, e2, e3 = sc.get("end_times", [t0 + 1.0, t0 + 2.6, t0 + 4.0])
     bg = kenburns("P01_meroe_portrait_ahmed_amir.jpg", (t - t0) / (t1 - t0), dict(z0=1.0, z1=1.08, x0=.5, x1=.5, y0=.55, y1=.5))
-    bg = ImageEnhance.Brightness(bg).enhance(.45)
-    big(bg, TITLE, t, t0 + .3, 1e9, y=560, size=190)
-    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 760, ease((t - e1) / .4))
-    paste(bg, text_img("فلمن يجب أن يكون؟", 76, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 880, ease((t - e2) / .4))
-    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1010, ease((t - e3) / .4))
-    # series logo placeholder (user to supply logo)
-    a = ease((t - e3 - .4) / .5)
-    lg = text_img("[ شعار السلسلة ]", 36, "Cairo-Regular.ttf", fill=(200, 190, 170))
-    box = Image.new("RGBA", (360, 120), (0, 0, 0, 0)); ImageDraw.Draw(box).rounded_rectangle((2, 2, 357, 117), 20, outline=(200, 190, 170, 200), width=3)
-    box.alpha_composite(lg, ((360 - lg.width) // 2, (120 - lg.height) // 2))
-    paste(bg, box, W / 2, 1200, a * .8)
+    bg = ImageEnhance.Brightness(bg.filter(ImageFilter.GaussianBlur(3))).enhance(.38)
+    # series logo: scale-in with overshoot, warm glow pulse, light sweep
+    u = (t - t0 - .25) / .9
+    if u > 0:
+        sc_ = 0.6 + 0.4 * eout(u) + 0.06 * math.sin(min(u, 1) * math.pi)
+        size = 600
+        lg = logo(size).copy()
+        k = (t - t0 - 1.0) / 1.1   # light sweep across the badge
+        if 0 < k < 1:
+            sweep = Image.new("L", (size, size), 0); dsw = ImageDraw.Draw(sweep)
+            x = -size * .3 + k * size * 1.6
+            dsw.polygon([(x, 0), (x + 90, 0), (x - 110, size), (x - 200, size)], fill=120)
+            sweep = sweep.filter(ImageFilter.GaussianBlur(25))
+            white = Image.new("RGBA", (size, size), (255, 240, 200, 0))
+            white.putalpha(Image.fromarray((np.asarray(sweep).astype(np.float32) * np.asarray(lg.getchannel("A")).astype(np.float32) / 255).astype(np.uint8)))
+            lg.alpha_composite(white)
+        glow_a = .35 + .15 * math.sin((t - t0) * 2.4)
+        glow = Image.new("RGBA", (900, 900), (0, 0, 0, 0)); ImageDraw.Draw(glow).ellipse((150, 150, 750, 750), fill=(255, 180, 70, int(255 * glow_a)))
+        paste(bg, glow.filter(ImageFilter.GaussianBlur(90)), W / 2, 560, ease(u))
+        paste(bg, lg, W / 2, 560, ease(u * 1.5), sc_)
+    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 960, ease((t - e1) / .4))
+    paste(bg, text_img("فلمن يجب أن يكون؟", 80, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 1075, ease((t - e2) / .4))
+    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1195, ease((t - e3) / .4))
     return bg
 
 # ---------- scene dispatcher ----------
@@ -430,7 +449,7 @@ def frame_at(t):
         prev = render_scene(SCENES[i - 1], t)
         fr = Image.blend(prev, fr, ease((t - sc["t0"]) / TRANS))
     # subtitles
-    st = SUBS.at(t)
+    st = SUBS.at(t) if t < SCENES[-1]["t0"] + TRANS else None   # end card already shows the spoken lines
     if st:
         a = min(ease((t - st[0]) / .12), ease((st[1] - t) / .12))
         im = text_img(st[2], 54, "Cairo-Bold.ttf", fill=(255, 255, 255), stroke=0, maxw=W - 2 * SAFE_SIDE - 40)
