@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MUSIC = os.path.join(HERE, "..", "..", "EXTERNAL_RESEARCH", "MUSIC", "licensed", "M02_curse_of_the_scarab.ogg")
 SFX = os.path.join(HERE, "..", "audio", "sfx.wav")
 video, vo, out = sys.argv[1:4]
-end_card = SCENES[-1]["t0"]
+end_card = [s for s in SCENES if s["kind"] == "end"][0]["t0"]
 OFFSET = round(84.0 - end_card, 2)          # track's big section (≈84 s) lands on the end card
 D = DURATION
 graph = (
