@@ -3,7 +3,14 @@
 Outputs 48 kHz stereo WAV stems: music.wav, sfx.wav"""
 import numpy as np, sys, os, re, wave
 sys.path.insert(0, os.path.dirname(__file__))
-from episode import SCENES, DURATION
+import episode as _E
+from timing import SCENES, DURATION
+import numpy as _np
+_OLD = [x["t0"] for x in _E.SCENES] + [_E.DURATION]
+_NEW = [x["t0"] for x in SCENES] + [DURATION]
+def RT(x):
+    """old (85 s draft) timeline -> new voice-synced timeline"""
+    return float(_np.interp(x, _OLD, _NEW))
 SR = 48000
 N = int(SR * DURATION)
 t = np.arange(N) / SR
@@ -59,7 +66,7 @@ def pluck(t0, midi, amp=.18, dur=1.6):
     w[:200] *= np.linspace(0, 1, 200)
     j = min(N, i0 + n); music[i0:j, 0] += w[:j-i0] * .9; music[i0:j, 1] += w[:j-i0]
 motif = [62, 63, 66, 67, 69, 67, 66, 63]   # D Eb F# G A (hijaz)
-for k, (st, base) in enumerate([(1.0, 0), (19.5, 0), (27.0, 0), (43.0, -2), (73.0, 0), (79.0, 0)]):
+for k, (st, base) in enumerate([(RT(1.0), 0), (RT(19.5), 0), (RT(27.0), 0), (RT(43.0), -2), (RT(73.0), 0), (RT(79.0), 0)]):
     for j, m in enumerate(motif[:6 if k % 2 else 5]):
         pluck(st + j * 0.42, m + base, amp=.12)
 # 4) pulse (frame drum style) building from 33 s to 65 s
@@ -67,16 +74,17 @@ def drum(t0, amp):
     i0 = int(t0*SR); n = int(.5*SR); tt = np.arange(n)/SR
     w = np.sin(2*np.pi*(70*np.exp(-tt*8)+45)*tt) * np.exp(-tt*9) * amp
     j = min(N, i0+n); music[i0:j] += w[:j-i0, None]
-bt = 33.5
-while bt < 65.0:
-    a = 0.25 + 0.45 * (bt - 33.5) / 31.5
-    drum(bt, a);
-    if bt > 50: drum(bt + 0.375, a * .5)
-    bt += 0.75 if bt < 50 else 0.75
-for bt in np.arange(72.0, 78.0, 1.5): drum(bt, .2)
+bt = RT(33.5); b_end = SCENES[9]["count_end"]; b_mid = RT(50)
+while bt < b_end:
+    a = 0.25 + 0.45 * (bt - RT(33.5)) / (b_end - RT(33.5))
+    drum(bt, a)
+    if bt > b_mid: drum(bt + 0.375, a * .5)
+    bt += 0.75
+for bt in np.arange(SCENES[10]["t0"], SCENES[11]["t0"], 1.5): drum(bt, .2)
 # 5) section dynamics
-dyn = env_seg([(0, .55), (4.5, .5), (10.5, .45), (19, .5), (26, .55), (33.5, .6), (50, .75), (62.5, .8),
-               (65.2, 1.0), (66.0, .45), (72, .5), (78, .8), (82, 1.0), (DURATION, 0)])
+ce = SCENES[9]["count_end"]
+dyn = env_seg([(0, .55), (RT(4.5), .5), (RT(10.5), .45), (RT(19), .5), (RT(26), .55), (RT(33.5), .6), (RT(50), .75), (RT(62.5), .8),
+               (ce, 1.0), (ce + .8, .45), (RT(72), .5), (RT(78), .8), (DURATION - 3, 1.0), (DURATION, 0)])
 music *= dyn[:, None]
 music[:int(.05*SR)] *= np.linspace(0, 1, int(.05*SR))[:, None]
 music /= np.max(np.abs(music)) + 1e-9
@@ -135,7 +143,7 @@ for sc in SCENES:
         add(float(at), FX[name](), gain=1.0)
 # continuous desert wind, very low, louder in the opening
 wind = bp(noise(DURATION)[:N], 250, 1400) * (0.5 + 0.5*np.sin(2*np.pi*0.11*t)**2)
-wind *= env_seg([(0, .0), (.3, .35), (4.5, .22), (10.5, .12), (78, .12), (DURATION, 0)])
+wind *= env_seg([(0, .0), (.3, .35), (RT(4.5), .22), (RT(10.5), .12), (RT(78), .12), (DURATION, 0)])
 sfx[:, 0] += wind*.6; sfx[:, 1] += np.roll(wind, 2400)*.6
 sfx /= np.max(np.abs(sfx)) + 1e-9; sfx *= .6
 

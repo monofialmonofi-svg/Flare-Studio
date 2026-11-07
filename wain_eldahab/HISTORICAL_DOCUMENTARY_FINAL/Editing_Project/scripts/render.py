@@ -6,7 +6,8 @@ import sys, os, json, math, subprocess
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageOps
 sys.path.insert(0, os.path.dirname(__file__))
-from episode import SCENES, DURATION, FPS, TIMELINE, TITLE, SUBTITLE
+from episode import FPS, TIMELINE, TITLE, SUBTITLE
+from timing import SCENES, DURATION
 import subs as SUBS
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -273,13 +274,13 @@ def map_frame(t, keys, marks, routes=(), regions=()):
 
 MEROE = geo_px(33.749, 16.938)
 def scene_map1(t, sc):
-    t0 = sc["t0"]
-    keys = [(t0, 3600, 4700, 4300), (t0 + 2.2, 3800, 5500, 2600), (t0 + 4.4, MEROE[0] - 60, MEROE[1] + 160, 900), (sc["t1"], MEROE[0] - 30, MEROE[1] + 130, 760)]
-    marks = [("القاهرة", t0 + .6, False), ("الخرطوم", t0 + 4.1, False), ("مروي (البجراوية)", t0 + 5.9, True)]
-    regs = [("مصر", t0 + .3), ("السودان", t0 + .9), ("البحر الأحمر", t0 + .5), ("البحر المتوسط", t0 + .2), ("نهر النيل", t0 + 1.6)]
+    t0 = sc["t0"]; K = sc.get("k", 1.0)
+    keys = [(t0, 3600, 4700, 4300), (t0 + 2.2 * K, 3800, 5500, 2600), (t0 + 4.4 * K, MEROE[0] - 60, MEROE[1] + 160, 900), (sc["t1"], MEROE[0] - 30, MEROE[1] + 130, 760)]
+    marks = [("القاهرة", t0 + .6 * K, False), ("الخرطوم", t0 + 4.1 * K, False), ("مروي (البجراوية)", t0 + 5.9 * K, True)]
+    regs = [("مصر", t0 + .3 * K), ("السودان", t0 + .9 * K), ("البحر الأحمر", t0 + .5 * K), ("البحر المتوسط", t0 + .2 * K), ("نهر النيل", t0 + 1.6 * K)]
     fr = map_frame(t, keys, marks, regions=regs)
     # distance callout
-    a = fade(t, t0 + 5.0, sc["t1"], .4)
+    a = fade(t, t0 + 5.0 * K, sc["t1"], .4)
     if a > 0:
         im = text_img("≈ 200 كم شمال شرقي الخرطوم", 44, "Cairo-Bold.ttf", fill=SAND, maxw=W - 200)
         box = Image.new("RGBA", (im.width, im.height - 10), (20, 14, 8, 170))
@@ -287,12 +288,12 @@ def scene_map1(t, sc):
     return fr
 
 def scene_map2(t, sc):
-    t0 = sc["t0"]; mp, meta = basemap()
+    t0 = sc["t0"]; K = sc.get("k", 1.0); mp, meta = basemap()
     mid = ((MEROE[0] + 1500) / 2, (MEROE[1] + 1100) / 2)
-    keys = [(t0, MEROE[0], MEROE[1] + 150, 1000), (t0 + 1.8, mid[0] - 150, mid[1] + 400, 7400), (t0 + 3.4, 1700, 2150, 4200), (sc["t1"], 1650, 1980, 3900)]
-    marks = [("مروي (البجراوية)", t0, True), ("ميونخ", t0 + 2.4, False), ("برلين", t0 + 3.8, False)]
-    routes = [("مروي (البجراوية)", "ميونخ", t0 + 1.0, t0 + 2.5), ("مروي (البجراوية)", "برلين", t0 + 2.2, t0 + 3.9)]
-    regs = [("البحر المتوسط", t0 + 1.0), ("مصر", t0 + 1.2), ("السودان", t0 + .6), ("ألمانيا", t0 + 2.0)]
+    keys = [(t0, MEROE[0], MEROE[1] + 150, 1000), (t0 + 1.8 * K, mid[0] - 150, mid[1] + 400, 7400), (t0 + 3.4 * K, 1700, 2150, 4200), (sc["t1"], 1650, 1980, 3900)]
+    marks = [("مروي (البجراوية)", t0, True), ("ميونخ", t0 + 2.4 * K, False), ("برلين", t0 + 3.8 * K, False)]
+    routes = [("مروي (البجراوية)", "ميونخ", t0 + 1.0 * K, t0 + 2.5 * K), ("مروي (البجراوية)", "برلين", t0 + 2.2 * K, t0 + 3.9 * K)]
+    regs = [("البحر المتوسط", t0 + 1.0 * K), ("مصر", t0 + 1.2 * K), ("السودان", t0 + .6 * K), ("ألمانيا", t0 + 2.0 * K)]
     return map_frame(t, keys, marks, routes, regs)
 
 def pyramid_icon(size, fill):
@@ -341,14 +342,15 @@ def scene_counter(t, sc):
 
 def scene_end(t, sc):
     t0, t1 = sc["t0"], sc["t1"]
+    e1, e2, e3 = sc.get("end_times", [t0 + 1.0, t0 + 2.6, t0 + 4.0])
     bg = kenburns("P01_meroe_portrait_ahmed_amir.jpg", (t - t0) / (t1 - t0), dict(z0=1.0, z1=1.08, x0=.5, x1=.5, y0=.55, y1=.5))
     bg = ImageEnhance.Brightness(bg).enhance(.45)
     big(bg, TITLE, t, t0 + .3, 1e9, y=560, size=190)
-    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 760, ease((t - t0 - 1.0) / .4))
-    paste(bg, text_img("فلمن يجب أن يكون؟", 76, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 880, ease((t - t0 - 2.6) / .4))
-    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1010, ease((t - t0 - 4.0) / .4))
+    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 760, ease((t - e1) / .4))
+    paste(bg, text_img("فلمن يجب أن يكون؟", 76, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 880, ease((t - e2) / .4))
+    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1010, ease((t - e3) / .4))
     # series logo placeholder (user to supply logo)
-    a = ease((t - t0 - 4.4) / .5)
+    a = ease((t - e3 - .4) / .5)
     lg = text_img("[ شعار السلسلة ]", 36, "Cairo-Regular.ttf", fill=(200, 190, 170))
     box = Image.new("RGBA", (360, 120), (0, 0, 0, 0)); ImageDraw.Draw(box).rounded_rectangle((2, 2, 357, 117), 20, outline=(200, 190, 170, 200), width=3)
     box.alpha_composite(lg, ((360 - lg.width) // 2, (120 - lg.height) // 2))

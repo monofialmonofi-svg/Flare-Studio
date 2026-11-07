@@ -13,7 +13,7 @@ if [[ -z "$VO" ]]; then
    -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -movflags +faststart -shortest "$OUT"
 else
   ffmpeg -y -loglevel error -i "$V" -i "$A/music.wav" -i "$A/sfx.wav" -i "$VO" -filter_complex \
-   "[3:a]aresample=48000,pan=stereo|c0=c0|c1=c0,highpass=f=80,afftdn=nf=-25:tn=1,\
+   "[3:a]aresample=48000,pan=stereo|c0=c0|c1=c0,highpass=f=80,afftdn=nf=-42:tn=1,\
 equalizer=f=250:t=q:w=1.2:g=-2,equalizer=f=3200:t=q:w=1.0:g=3,equalizer=f=6500:t=q:w=2:g=-2,\
 acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=4,alimiter=limit=0.9,asplit=2[vo][key];\
 [1:a]volume=0.8[m];[m][key]sidechaincompress=threshold=0.03:ratio=8:attack=40:release=500:makeup=1[mduck];\

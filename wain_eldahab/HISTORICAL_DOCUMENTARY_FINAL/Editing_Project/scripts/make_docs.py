@@ -2,7 +2,8 @@
 """Generates Voiceover_Script.txt (full text + timed version + sync table) and Arabic_Subtitles.srt from episode.py"""
 import os, sys, re
 sys.path.insert(0, os.path.dirname(__file__))
-from episode import SCENES, DURATION, TITLE, SUBTITLE
+from episode import TITLE, SUBTITLE
+from timing import SCENES, DURATION
 import subs
 
 OUT = sys.argv[1]
