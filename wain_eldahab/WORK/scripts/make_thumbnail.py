@@ -19,7 +19,8 @@ if photo:
     from PIL import ImageOps
     src = ImageOps.exif_transpose(Image.open(photo)).convert("RGB")
     if src.mode != "RGBA" and not photo.lower().endswith(".png"):
-        cw = int(src.width * .87); ch = int(cw / .72); x0 = src.width - cw; y0 = int(src.height * .17)
+        cx = float(os.environ.get('THUMB_CX', '.6')); cyt = float(os.environ.get('THUMB_Y0', '.17'))
+        cw = int(src.width * .87); ch = int(cw / .72); x0 = int(min(max(src.width * cx - cw / 2, 0), src.width - cw)); y0 = int(src.height * cyt)
         src = src.crop((x0, y0, x0 + cw, min(src.height, y0 + ch)))
         tw = 640; th = int(src.height * tw / src.width)
         ph = src.resize((tw, th), Image.LANCZOS).convert("RGBA")

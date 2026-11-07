@@ -38,6 +38,11 @@ def cues():
     return out
 
 CUES = cues()
+try:
+    import timing as _T
+    CUES = _T.CUES   # aligned to the real voiceover
+except Exception as _e:
+    print('timing not used:', _e)
 def at(t):
     for a, b, s in CUES:
         if a <= t < b: return (a, b, s)
