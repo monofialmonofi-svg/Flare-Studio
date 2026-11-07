@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageOps
 sys.path.insert(0, os.path.dirname(__file__))
 from episode import FPS, TIMELINE, TITLE, SUBTITLE
-from timing import SCENES, DURATION
+from timing import SCENES, DURATION, SOCIAL
 import subs as SUBS
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -31,9 +31,11 @@ def text_img(s, size, fnt="Cairo-Black.ttf", fill=SAND, stroke=0, stroke_fill=IN
     """Render Arabic text (raqm: shaping + bidi) to an RGBA image, auto-shrinking to maxw."""
     key = (s, size, fnt, fill, stroke, shadow, maxw)
     if key in _tc: return _tc[key]
+    import re as _re
+    dirn = "rtl" if _re.search(r"[\u0600-\u06FF]", s) else "ltr"
     while True:
         f = F(fnt, size)
-        bb = f.getbbox(s, direction="rtl", language="ar", features=["-liga"] if False else None)
+        bb = f.getbbox(s, direction=dirn, language="ar", features=["-liga"] if False else None)
         tw, th = bb[2] - bb[0], bb[3] - bb[1]
         if tw <= maxw or size < 20: break
         size = int(size * 0.92)
@@ -43,11 +45,11 @@ def text_img(s, size, fnt="Cairo-Black.ttf", fill=SAND, stroke=0, stroke_fill=IN
     org = (pad - bb[0], pad - bb[1])
     if shadow:
         sh = Image.new("RGBA", im.size, (0, 0, 0, 0))
-        ImageDraw.Draw(sh).text((org[0] + 3, org[1] + 5), s, font=f, fill=(0, 0, 0, 200), direction="rtl", language="ar",
+        ImageDraw.Draw(sh).text((org[0] + 3, org[1] + 5), s, font=f, fill=(0, 0, 0, 200), direction=dirn, language="ar",
                                 stroke_width=stroke, stroke_fill=(0, 0, 0, 200))
         sh = sh.filter(ImageFilter.GaussianBlur(6))
         im = Image.alpha_composite(im, sh); d = ImageDraw.Draw(im)
-    d.text(org, s, font=f, fill=fill, direction="rtl", language="ar", stroke_width=stroke, stroke_fill=stroke_fill)
+    d.text(org, s, font=f, fill=fill, direction=dirn, language="ar", stroke_width=stroke, stroke_fill=stroke_fill)
     _tc[key] = im
     return im
 
@@ -340,21 +342,104 @@ def scene_counter(t, sc):
         paste(bg, text_img("بحسب رواية فرليني نفسه", 56, "Cairo-Bold.ttf", fill=SAND), W / 2, 830, ease((t - rv - .3) / .4))
     return bg
 
+_logo = {}
+def logo(size):
+    if size not in _logo:
+        im = Image.open(os.path.join(ROOT, "LOGOS_AND_BRANDING", "logo.png")).convert("RGBA")
+        _logo[size] = im.resize((size, size), Image.LANCZOS)
+    return _logo[size]
+
 def scene_end(t, sc):
     t0, t1 = sc["t0"], sc["t1"]
     e1, e2, e3 = sc.get("end_times", [t0 + 1.0, t0 + 2.6, t0 + 4.0])
     bg = kenburns("P01_meroe_portrait_ahmed_amir.jpg", (t - t0) / (t1 - t0), dict(z0=1.0, z1=1.08, x0=.5, x1=.5, y0=.55, y1=.5))
-    bg = ImageEnhance.Brightness(bg).enhance(.45)
-    big(bg, TITLE, t, t0 + .3, 1e9, y=560, size=190)
-    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 760, ease((t - e1) / .4))
-    paste(bg, text_img("فلمن يجب أن يكون؟", 76, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 880, ease((t - e2) / .4))
-    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1010, ease((t - e3) / .4))
-    # series logo placeholder (user to supply logo)
-    a = ease((t - e3 - .4) / .5)
-    lg = text_img("[ شعار السلسلة ]", 36, "Cairo-Regular.ttf", fill=(200, 190, 170))
-    box = Image.new("RGBA", (360, 120), (0, 0, 0, 0)); ImageDraw.Draw(box).rounded_rectangle((2, 2, 357, 117), 20, outline=(200, 190, 170, 200), width=3)
-    box.alpha_composite(lg, ((360 - lg.width) // 2, (120 - lg.height) // 2))
-    paste(bg, box, W / 2, 1200, a * .8)
+    bg = ImageEnhance.Brightness(bg.filter(ImageFilter.GaussianBlur(3))).enhance(.38)
+    # series logo: scale-in with overshoot, warm glow pulse, light sweep
+    u = (t - t0 - .25) / .9
+    if u > 0:
+        sc_ = 0.6 + 0.4 * eout(u) + 0.06 * math.sin(min(u, 1) * math.pi)
+        size = 600
+        lg = logo(size).copy()
+        k = (t - t0 - 1.0) / 1.1   # light sweep across the badge
+        if 0 < k < 1:
+            sweep = Image.new("L", (size, size), 0); dsw = ImageDraw.Draw(sweep)
+            x = -size * .3 + k * size * 1.6
+            dsw.polygon([(x, 0), (x + 90, 0), (x - 110, size), (x - 200, size)], fill=120)
+            sweep = sweep.filter(ImageFilter.GaussianBlur(25))
+            white = Image.new("RGBA", (size, size), (255, 240, 200, 0))
+            white.putalpha(Image.fromarray((np.asarray(sweep).astype(np.float32) * np.asarray(lg.getchannel("A")).astype(np.float32) / 255).astype(np.uint8)))
+            lg.alpha_composite(white)
+        glow_a = .35 + .15 * math.sin((t - t0) * 2.4)
+        glow = Image.new("RGBA", (900, 900), (0, 0, 0, 0)); ImageDraw.Draw(glow).ellipse((150, 150, 750, 750), fill=(255, 180, 70, int(255 * glow_a)))
+        paste(bg, glow.filter(ImageFilter.GaussianBlur(90)), W / 2, 560, ease(u))
+        paste(bg, lg, W / 2, 560, ease(u * 1.5), sc_)
+    paste(bg, text_img("الذهب اليوم في متاحف أوروبا", 54, "Cairo-Bold.ttf", fill=SAND), W / 2, 960, ease((t - e1) / .4))
+    paste(bg, text_img("فلمن يجب أن يكون؟", 80, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 1075, ease((t - e2) / .4))
+    paste(bg, text_img("اكتب رأيك في التعليقات… وتابعنا للحلقة القادمة", 40, "Cairo-Bold.ttf", fill=SAND), W / 2, 1195, ease((t - e3) / .4))
+    return bg
+
+
+# ---------- outro (social accounts) ----------
+def _rr(size, fill, r):
+    im = Image.new("RGBA", (size, size), (0, 0, 0, 0)); ImageDraw.Draw(im).rounded_rectangle((0, 0, size - 1, size - 1), r, fill=fill); return im
+_icons = {}
+def icon(name, size=120):
+    """simple platform marks drawn from primitives"""
+    if name in _icons: return _icons[name]
+    S2 = size * 4; r = S2 // 4
+    if name == "youtube":
+        im = Image.new("RGBA", (S2, S2), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+        d.rounded_rectangle((0, S2 * .16, S2 - 1, S2 * .84), S2 * .2, fill=(255, 0, 0, 255))
+        d.polygon([(S2 * .40, S2 * .32), (S2 * .40, S2 * .68), (S2 * .70, S2 * .5)], fill=(255, 255, 255, 255))
+    elif name == "facebook":
+        im = _rr(S2, (24, 119, 242, 255), r); d = ImageDraw.Draw(im)
+        f = ImageFont.truetype(os.path.join(FONTS, "Cairo-Black.ttf"), int(S2 * .95))
+        bb = d.textbbox((0, 0), "f", font=f); d.text((S2 * .58 - (bb[2] + bb[0]) / 2, S2 * 1.0 - bb[3]), "f", font=f, fill=(255, 255, 255, 255))
+    elif name == "instagram":
+        y, x = np.mgrid[0:S2, 0:S2]; u = ((x + (S2 - y)) / (2 * S2))[..., None]
+        c1, c2, c3 = np.array([254, 218, 117]), np.array([214, 41, 118]), np.array([79, 91, 213])
+        g = np.where(u < .5, c1 + (c2 - c1) * (u / .5), c2 + (c3 - c2) * ((u - .5) / .5)).astype(np.uint8)
+        im = Image.fromarray(g, "RGB").convert("RGBA"); m = Image.new("L", (S2, S2), 0)
+        ImageDraw.Draw(m).rounded_rectangle((0, 0, S2 - 1, S2 - 1), r, fill=255); im.putalpha(m)
+        d = ImageDraw.Draw(im); w = int(S2 * .075)
+        d.rounded_rectangle((S2 * .2, S2 * .2, S2 * .8, S2 * .8), S2 * .17, outline=(255, 255, 255, 255), width=w)
+        d.ellipse((S2 * .36, S2 * .36, S2 * .64, S2 * .64), outline=(255, 255, 255, 255), width=w)
+        d.ellipse((S2 * .66, S2 * .27, S2 * .72, S2 * .33), fill=(255, 255, 255, 255))
+    elif name == "tiktok":
+        im = _rr(S2, (10, 10, 10, 255), r)
+        def note(col, dx, dy):
+            n = Image.new("RGBA", (S2, S2), (0, 0, 0, 0)); d = ImageDraw.Draw(n); w = S2 * .11
+            x0 = S2 * .50 + dx; y0 = S2 * .70 + dy
+            d.rectangle((x0, S2 * .2 + dy, x0 + w, y0), fill=col)
+            d.ellipse((x0 - S2 * .2, y0 - S2 * .13, x0 + w * .9, y0 + S2 * .13), outline=col, width=int(w))
+            d.arc((x0, S2 * .2 + dy - S2 * .02, x0 + S2 * .3, S2 * .45 + dy), 180, 270, fill=col, width=int(w))
+            return n
+        im.alpha_composite(note((37, 244, 238, 255), -S2 * .025, -S2 * .02))
+        im.alpha_composite(note((254, 44, 85, 255), S2 * .025, S2 * .02))
+        im.alpha_composite(note((255, 255, 255, 255), 0, 0))
+    _icons[name] = im.resize((size, size), Image.LANCZOS)
+    return _icons[name]
+
+LABEL = {"youtube": "YouTube", "tiktok": "TikTok", "instagram": "Instagram", "facebook": "Facebook"}
+def scene_outro(t, sc):
+    t0, t1 = sc["t0"], sc["t1"]
+    bg = kenburns("P05_meroe_de_walick_2.jpg", (t - t0) / (t1 - t0), dict(z0=1.1, z1=1.18, x0=.15, x1=.2, y0=.5, y1=.5))
+    bg = ImageEnhance.Brightness(bg.filter(ImageFilter.GaussianBlur(16))).enhance(.28)
+    paste(bg, logo(300), W / 2, 400, ease((t - t0 - .1) / .4), .85 + .15 * eout((t - t0) / .6))
+    paste(bg, text_img("تابعنا على", 72, "Cairo-Black.ttf", fill=GOLD, stroke=3), W / 2, 620, ease((t - t0 - .4) / .35))
+    for i, (pf, handle) in enumerate(SOCIAL):
+        ta = t0 + .9 + i * .35; a = ease((t - ta) / .35)
+        if a <= 0: continue
+        y = 790 + i * 155; slide = (1 - eout((t - ta) / .5)) * 120
+        card = Image.new("RGBA", (W - 2 * SAFE_SIDE - 40, 128), (0, 0, 0, 0))
+        ImageDraw.Draw(card).rounded_rectangle((0, 0, card.width - 1, 127), 30, fill=(20, 14, 8, 185), outline=GOLD + (140,), width=2)
+        paste(bg, card, W / 2 + slide, y, a)
+        ic = icon(pf, 92); paste(bg, ic, W / 2 + card.width / 2 - 80 + slide, y, a)   # icon on the right (RTL)
+        lab = text_img(LABEL[pf], 34, "Cairo-Bold.ttf", fill=(200, 185, 160), shadow=False)
+        hd = text_img(handle, 46 if handle.startswith("@") else 38, "Cairo-Bold.ttf", fill=(255, 248, 230), shadow=False)
+        x_text = W / 2 + card.width / 2 - 150
+        paste(bg, lab, x_text - lab.width / 2 + slide, y - 26, a)
+        paste(bg, hd, x_text - hd.width / 2 + slide, y + 20, a)
     return bg
 
 # ---------- scene dispatcher ----------
@@ -415,6 +500,7 @@ def render_scene(sc, t):
     elif k == "map2": fr = scene_map2(t, sc)
     elif k == "counter": fr = scene_counter(t, sc)
     elif k == "end": return scene_end(t, sc)
+    elif k == "outro": return scene_outro(t, sc)
     if k in ("map1", "map2"):
         fr.alpha_composite(vignette())
         if k == "map2": timeline(fr, t, sc["t0"], sc["t1"], 1844) if False else None
@@ -430,7 +516,7 @@ def frame_at(t):
         prev = render_scene(SCENES[i - 1], t)
         fr = Image.blend(prev, fr, ease((t - sc["t0"]) / TRANS))
     # subtitles
-    st = SUBS.at(t)
+    st = SUBS.at(t) if t < [x for x in SCENES if x["kind"] == "end"][0]["t0"] + TRANS else None   # end card already shows the spoken lines
     if st:
         a = min(ease((t - st[0]) / .12), ease((st[1] - t) / .12))
         im = text_img(st[2], 54, "Cairo-Bold.ttf", fill=(255, 255, 255), stroke=0, maxw=W - 2 * SAFE_SIDE - 40)

@@ -7,7 +7,7 @@ import episode as _E
 from timing import SCENES, DURATION
 import numpy as _np
 _OLD = [x["t0"] for x in _E.SCENES] + [_E.DURATION]
-_NEW = [x["t0"] for x in SCENES] + [DURATION]
+_NEW = [x["t0"] for x in SCENES[:len(_E.SCENES)]] + [SCENES[len(_E.SCENES) - 1]["t1"]]
 def RT(x):
     """old (85 s draft) timeline -> new voice-synced timeline"""
     return float(_np.interp(x, _OLD, _NEW))
