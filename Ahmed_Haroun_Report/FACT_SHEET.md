@@ -1,6 +1,10 @@
 # أحمد هارون.. ماذا قال قبل اعتقاله؟ — Verified fact sheet (8 Nov 2026)
 
-Status: **the source media has now been obtained** (see below). **The video has NOT been produced yet.** Still missing: verified verbatim subtitles (needs a native reviewer) and the official outro.
+Status: **produced.** `Ahmed_Haroun_Alwan_Newspaper_Reel.mp4` (89 s, 1080×1920, 30 fps, H.264/AAC, −14 LUFS), `Thumbnail.jpg`, `Arabic_Subtitles.srt`, `Project_Files/`.
+
+Subtitles are in **Modern Standard Arabic** (at the client's request), translated from the Sudanese dialect. Every subtitled statement matches meanings published in the press: the Altabia headline for the America quote; Tag Press and السوداني for the al-Burhan passage (1:00:50–1:01:59 in the episode). The machine transcripts used to find the timings are in `Project_Files/transcripts/`.
+
+**Recommended before publishing:** have a Sudanese editor listen once against `Arabic_Subtitles.srt` (8 lines). The official outro was not supplied; the video ends on the Alwan logo with «إنتاج صحيفة ألوان السودانية».
 
 ## Confirmed by several outlets (each attributed to its source)
 
