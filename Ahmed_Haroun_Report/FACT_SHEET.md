@@ -1,6 +1,6 @@
 # أحمد هارون.. ماذا قال قبل اعتقاله؟ — Verified fact sheet (8 Nov 2026)
 
-Status: **research only. The video has NOT been produced yet** because the interview, the Altabia clip, a verified photo of Ahmed Haroun and the outro are not available in this environment (see "Blocked" below).
+Status: **the source media has now been obtained** (see below). **The video has NOT been produced yet.** Still missing: verified verbatim subtitles (needs a native reviewer) and the official outro.
 
 ## Confirmed by several outlets (each attributed to its source)
 
@@ -31,9 +31,27 @@ Status: **research only. The video has NOT been produced yet** because the inter
 - Any quote from the interview: I had no access to the audio.
 - Do not assume the interview was the reason for his arrest. Reuters says the reason was unclear.
 
-## Blocked (needed to produce the video)
-1. **Sudan Podcast interview** (Apple Podcasts / Podscan): `podcasts.apple.com`, `itunes.apple.com`, `podscan.fm` are blocked by the environment's network policy. Upload the audio or video file.
-2. **Altabia clip**: `altabia.net` is blocked. Upload `VID-20261107-WA0009-1.mp4`.
-3. **Reuters / AP / ICC pages**: `www.reuters.com`, `apnews.com`, `www.icc-cpi.int` are blocked for direct reading. The facts above come from web search and syndicated copies of the same reports.
-4. **Verified photo of Ahmed Haroun**: none on Wikimedia Commons. Upload a photo Alwan has rights to (or rely on frames from the interview video).
+## Source media obtained (8 Nov 2026)
+| Item | Source | Notes |
+|---|---|---|
+| **Full interview audio**, 4 h 12 min 58 s, MP3 (243 MB) | Sudan Podcast episode «مع أحمد هارون: كيف ينظر الإسلاميون للجيش؟ ومستقبل البلاد بعد الحرب», published 6 Nov 2026. Apple Podcasts episode id 1000800270714, audio from the official Omny feed (`traffic.omny.fm`) | Too big for GitHub; kept in the session work folder (sha256 prefix 1b0c139dc030faa4) |
+| **Interview video excerpt**, 85 s, 360×640 | Altabia (`SOURCE_MEDIA/altabia_VID-20261107-WA0009-1.mp4`) | A vertical cut of the same Sudan Podcast interview: Sudan Podcast logo, name caption «أحمد هارون – رئيس حزب المؤتمر الوطني», ends with «شاهد الحلقة كاملة» |
+| **Photo of Ahmed Haroun** | The episode's cover art (`SOURCE_MEDIA/sudan_podcast_cover_ahmed_haroun.jpg`), 600×600 | Matches the person in the interview video. Rights belong to Sudan Podcast; credit it on screen |
+
+## Verbatim quotes confirmed in published text
+| Quote | Confirmed by | Location in the media |
+|---|---|---|
+| «أمريكا بتوريك اللبن وتعشيك بالموية» | Altabia headline ([article](https://altabia.net/2026/11/07/أحمد-هارون-أمريكا-بتوريك-اللبن-وتعشيك/)) | Altabia clip, about 14.4–17.7 s. The audio may say «الأمريكان» rather than «أمريكا»; a native listener must confirm the exact wording |
+| «ما بنشعر بمَوْجِدَة تجاه البرهان.. نحن في مركب واحدة» | Headline in السوداني ([alsudaninews](https://alsudaninews.com/?p=206037)) | Not yet located in the 4-hour audio |
+
+**Machine transcription is not reliable for this dialect.** Whisper small and large-v3 both garble the Sudanese Arabic (for example, they mis-transcribe the quote above). Every subtitle must therefore be checked by a native Sudanese listener before publication.
+
+## Additional reporting
+- France 24 cites a security source as saying the detention was based on legal procedures, without further details ([France 24](https://www.france24.com/ar/أفريقيا/20261108-السودان-الجيش-يوقف-أحمد-هارون-رئيس-الحزب-الحاكم-في-عهد-عمر-البشير)).
+
+## Previously blocked (status)
+1. ~~Sudan Podcast interview~~ **obtained** (full audio).
+2. ~~Altabia clip~~ **obtained**.
+3. **Reuters / AP / ICC pages**: still blocked for direct reading. The facts above come from web search and syndicated copies of the same reports.
+4. ~~Verified photo~~ **obtained** (Sudan Podcast cover art plus interview video frames; none on Wikimedia Commons).
 5. **Official outro**: not among the attached files. Upload it (only the logo was attached).
