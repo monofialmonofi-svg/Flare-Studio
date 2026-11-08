@@ -141,7 +141,7 @@ def place_cover(fr, t, t0, t1, blur_bg=True, dim=1.0, z0=1.0, z1=1.08, cy=330):
     fr[max(0, y0):max(0, y0) + sub.shape[0], max(0, x0):max(0, x0) + sub.shape[1]] = sub * dim
 
 # ---------------------------------------------------------------- map
-REG = json.load(open(f"{X}/work/region.json"))
+REG = json.load(open(f"{X}/work/region_sudan_official.json"))
 def map_layer():
     lon0, lon1, lat0, lat1 = 19.0, 41.5, 2.0, 25.5
     sx = 900 / (lon1 - lon0); ox, oy = 90, 520
@@ -151,6 +151,7 @@ def map_layer():
         polys = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
         for poly in polys:
             pts = [P(*c) for c in poly[0]]
+            if len(pts) < 3: continue
             if code == "SDN":
                 d.polygon(pts, fill=(64, 64, 64, 235), outline=(215, 36, 41, 255), width=5)
             else:

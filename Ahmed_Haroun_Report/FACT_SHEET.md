@@ -59,3 +59,6 @@ Subtitles are in **Modern Standard Arabic** (at the client's request), translate
 3. **Reuters / AP / ICC pages**: still blocked for direct reading. The facts above come from web search and syndicated copies of the same reports.
 4. ~~Verified photo~~ **obtained** (Sudan Podcast cover art plus interview video frames; none on Wikimedia Commons).
 5. **Official outro**: not among the attached files. Upload it (only the logo was attached).
+
+## Map
+The map of Sudan follows **Sudan's official position**: the **Halaib Triangle is included** and **Bir Tawil is excluded** (the 1902 administrative line). The Halaib Triangle is disputed: Egypt administers it and Sudan claims it. Source geometry: Natural Earth (public domain), `ne_50m_admin_0_countries` plus `ne_10m_admin_0_disputed_areas`. The result is in `Project_Files/map/region_sudan_official.json`.
