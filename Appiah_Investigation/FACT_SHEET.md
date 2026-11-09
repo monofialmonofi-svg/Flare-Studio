@@ -22,7 +22,7 @@
 ## Visual material
 | File | Source | Licence | On-screen label |
 |---|---|---|---|
-| Portrait of James Kwesi Appiah (2021) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:James_Kwesi_Appiah.jpg), Xibitgh | CC BY-SA 4.0 | «صورة أرشيفية» |
+| Kwesi Appiah in the Sudan national team tracksuit | **Supplied by the client** (9 Nov 2026); photographer not stated | Client's responsibility; add a credit if the source is known | «كواسي أبياه – مدرب منتخب السودان» |
 | Kigali Pelé Stadium (two photos) | [Commons](https://commons.wikimedia.org/wiki/File:Kigali_Pele_Stadium.jpg) (EmmysonB), [Commons](https://commons.wikimedia.org/wiki/File:Pele_stadium_beside.jpg) (Jadonsibo) | CC0 | «ملعب كيغالي بيليه – رواندا» |
 | Sudan national team, 2011 | [Commons](https://commons.wikimedia.org/wiki/File:LG_Cup_Africa_2011_Kenya_vs_Sudan.jpg), LG Electronics | CC BY 2.0 | «صورة أرشيفية (2011)», so it is not mistaken for the Qatar or Kigali camps |
 | Africa map | Natural Earth (public domain), Sudan drawn with the Halaib Triangle | — | — |

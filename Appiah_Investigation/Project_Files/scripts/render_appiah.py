@@ -96,8 +96,8 @@ def load_photo(name, grade_kind="news"):
     x = lum + (x - lum) * (0.92 if grade_kind == "news" else 0.25)
     x = x * np.array([0.98, 0.99, 1.02])                                                    # cool investigative tone
     return Image.fromarray((np.clip(x, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.UnsharpMask(1.6, 50, 2))
-P = {n: load_photo(n) for n in ("appiah_portrait", "kigali_pele_stadium", "kigali_pele_side", "sudan_team_2011")}
-P["appiah_mono"] = load_photo("appiah_portrait", "mono")
+P = {n: load_photo(n) for n in ("appiah_sudan", "kigali_pele_stadium", "kigali_pele_side", "sudan_team_2011")}
+P["appiah_mono"] = load_photo("appiah_sudan", "mono")
 P_BLUR = {k: np.asarray(v.resize((W, H)).filter(ImageFilter.GaussianBlur(30))).astype(np.float32) / 255 for k, v in P.items()}
 
 def place_photo(fr, key, u, z0, z1, fx=0.5, fy=0.4, dim=1.0, fit="cover", y_off=0):
@@ -275,7 +275,7 @@ def make_frame(t):
     fr = np.zeros((H, W, 3), np.float32); fr[:] = INK
     # --------- picture layer
     if t < A2:                                                       # S1: Appiah portrait slow push, then Kigali
-        if t < 7.6: place_photo(fr, "appiah_portrait", t / 7.6, 1.0, 1.14, fy=0.33, dim=lerp(0.25, 1.0, ease_out(t / 1.2)))
+        if t < 7.6: place_photo(fr, "appiah_sudan", t / 7.6, 1.08, 1.22, fx=0.58, fy=0.4, dim=lerp(0.25, 1.0, ease_out(t / 1.2)), fit="width", y_off=-330)
         else: place_photo(fr, "kigali_pele_stadium", (t - 7.6) / 4.4, 1.05, 1.15, fx=0.5, fy=0.5)
     elif t < 20.0:                                                   # S2a: map Kigali / Senegal, then claim
         fr[:] = INK; fr += P_BLUR["kigali_pele_side"] * 0.25
@@ -286,12 +286,12 @@ def make_frame(t):
         xs, ys = MAPPT(-14.5, 14.5); blit(fr, T("السنغال", 34, 800, (255, 255, 255), "tajx"), xs + 80, ys - 70, a)
         xd, yd = MAPPT(30.0, 15.5); blit(fr, T("السودان", 38, 800, (255, 255, 255), "tajx"), xd, yd, a)
     elif t < A3:                                                     # S2b: split-screen versus
-        place_photo(fr, "appiah_mono", (t - 20) / 10, 1.0, 1.06, fy=0.3, dim=0.35)
+        place_photo(fr, "appiah_mono", (t - 20) / 10, 1.05, 1.12, fx=0.58, fy=0.4, dim=0.35, fit="width", y_off=-200)
     elif t < A4:                                                     # S3: incentives
         place_photo(fr, "sudan_team_2011", (t - A3) / 15, 1.0, 1.12, fx=0.5, fy=0.45, dim=0.45)
     elif t < A5:                                                     # S4: powers
-        if t < 56.0: fr[:] = INK; fr += P_BLUR["appiah_portrait"] * 0.2
-        elif t < 63.0: place_photo(fr, "appiah_portrait", (t - 56) / 7, 1.0, 1.1, fy=0.3, dim=0.55)
+        if t < 56.0: fr[:] = INK; fr += P_BLUR["appiah_sudan"] * 0.2
+        elif t < 63.0: place_photo(fr, "appiah_sudan", (t - 56) / 7, 1.05, 1.15, fx=0.58, fy=0.4, dim=0.55, fit="width", y_off=330)
         else: place_photo(fr, "kigali_pele_side", (t - 63) / 7, 1.0, 1.1, dim=0.5)
     else:                                                            # S5: flag + questions + logo
         if t < 77.0:
@@ -313,7 +313,7 @@ def make_frame(t):
         kicker(fr, t, 0.5, A2 - 0.2, "تقرير خاص | صحيفة ألوان السودانية", 170)
         box_text(fr, t, 0.9, 7.4, "منتخب السودان.. من يدير المشهد خلف الكواليس؟", 960, 78)
         box_text(fr, t, 7.7, A2 - 0.2, "المدرب المسؤول عن المنتخب.. هل أصبح آخر من يعلم بمن تم استدعاؤهم؟", 960, 58)
-        source(fr, t, 1.2, 7.4, "كواسي أبياه – صورة أرشيفية", 1790)
+        source(fr, t, 1.2, 7.4, "كواسي أبياه – مدرب منتخب السودان", 1790)
         source(fr, t, 7.8, A2 - 0.2, "ملعب كيغالي بيليه – رواندا", 1790)
     elif t < 20.0:
         kicker(fr, t, A2 + 0.2, 19.8, "معسكر كيغالي.. قبل مواجهتي السنغال", 170)
@@ -340,7 +340,7 @@ def make_frame(t):
             big_q(fr, t, 51.0, 53.4, "من يملك القرار الفني؟", 960, 84)
             big_q(fr, t, 53.5, 55.8, "أين تنتهي الصلاحيات الإدارية؟", 960, 84)
         elif t < 63.0:
-            source(fr, t, 56.3, 62.8, "كواسي أبياه – صورة أرشيفية", 1790)
+            source(fr, t, 56.3, 62.8, "كواسي أبياه – مدرب منتخب السودان", 1790)
             stamp_card(fr, t, 56.2, 62.8, "19 أكتوبر 2026", "رئيس الاتحاد معتصم جعفر: عقد أبياه مستمر حتى 2029", "تصريحات صحفية", 360)
             stamp_card(fr, t, 57.6, 62.8, "أواخر أكتوبر 2026", "تقرير: أبياه يرى أن تحركات تستهدف تقليص صلاحياته تمهيداً لإبعاده", "المصدر: الترا سودان", 700)
             caveat(fr, t, 59.0, 62.8, "رواية منقولة عن مصادر.. ولا إعلان رسمي عن رحيل أبياه", 1050)
@@ -360,7 +360,7 @@ def make_frame(t):
                 blit(fr, logo_sprite(200), 540, 800, a)
                 blit(fr, T("تقرير خاص | صحيفة ألوان السودانية", 50, 800, (255, 255, 255), "tajx"), 540, 990, a)
                 blit(fr, T("إنتاج صحيفة ألوان السودانية", 40, 0, (216, 218, 217), "tajm"), 540, 1075, a)
-                blit(fr, T("المصادر: الترا سودان · winwin · النيلين · Panafrica Football · Wikimedia Commons", 26, 0, (160, 160, 160), "tajm", maxw=960), 540, 1230, a)
+                blit(fr, T("المصادر: الترا سودان · winwin · النيلين · Panafrica Football", 26, 0, (160, 160, 160), "tajm", maxw=960), 540, 1230, a)
     narr(fr, t, NARR)
     if 1.0 < t < 80.4: blit(fr, logo_sprite(62), W - 70 - logo_sprite(62).shape[1] / 2, 110, 0.6)
     fr = fr * VIG + GRAIN[int(t * FPS) % 5]
