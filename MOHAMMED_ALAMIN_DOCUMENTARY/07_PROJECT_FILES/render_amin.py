@@ -355,8 +355,8 @@ def make_frame(t):
         rule(fr, t, 62.3, 74.8, L(700, H * 0.48))
         caption(fr, t, 62.3, 74.8, "طريق في ود مدني (صورة حديثة، 2019)")
     elif t < 96.0:
-        song(fr, t, 76.0, 88.8, "وحياة ابتسامتك", L(860, H * 0.72), sub="من المحطات المبكرة")
-        song(fr, t, 89.2, 95.8, "أنا وحبيبي", L(800, H * 0.68), sub="عُرفت أيضاً باسم «يا حاسدين غرامنا»")
+        song(fr, t, 76.0, 88.8, "وحياة ابتسامتك", L(860, 190), sub="من المحطات المبكرة")
+        song(fr, t, 89.2, 95.8, "أنا وحبيبي", L(800, 190), sub="عُرفت أيضاً باسم «يا حاسدين غرامنا»")
         caption(fr, t, 75.5, 95.8, "تصميم توضيحي: أوتار العود")
     elif t < 105.0:
         caption(fr, t, 96.2, 104.8, "محمد الأمين على المسرح (أرشيف · ويكيميديا كومنز)")
@@ -431,9 +431,13 @@ if __name__ == "__main__":
     if PREVIEW:
         for t in PREVIEW: Image.fromarray(to8(make_frame(t))).save(f"{OUT}/{ORI}_{t:06.2f}.png")
         sys.exit()
-    NF = int(round(DUR * FPS)); NW = 4; k = int(WORKER[1:]); b = [round(NF * i / NW) for i in range(NW + 1)]
+    NF = int(round(DUR * FPS)); NW = 4
+    if "_" in WORKER:   # partial re-render: wA_B_k renders frames [A, B) split into 4
+        A, B_, k = [int(x) for x in WORKER[1:].split("_")]; b = [A + round((B_ - A) * i / NW) for i in range(NW + 1)]
+    else:
+        k = int(WORKER[1:]); b = [round(NF * i / NW) for i in range(NW + 1)]
     p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-                          "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-threads", "1", "-pix_fmt", "yuv420p", f"{OUT}/seg_{k}.mp4"], stdin=subprocess.PIPE)
+                          "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-threads", "1", "-pix_fmt", "yuv420p", (f"{OUT}/part_{k}.mp4" if "_" in WORKER else f"{OUT}/seg_{k}.mp4")], stdin=subprocess.PIPE)
     for fi in range(b[k], b[k + 1]):
         p.stdin.write(to8(make_frame(fi / FPS)).tobytes())
         if fi % 150 == 0: print(f"w{k} {fi}/{b[k + 1]}", flush=True)
