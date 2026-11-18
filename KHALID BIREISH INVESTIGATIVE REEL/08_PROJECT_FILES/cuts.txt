@@ -1,0 +1,5 @@
+157.30 162.65 A_hook
+92.30 97.40 D_founders
+131.55 144.90 C_campaign
+172.55 180.20 E_steadfast
+60.00 75.00 BROLL
