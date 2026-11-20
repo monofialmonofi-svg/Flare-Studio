@@ -42,6 +42,7 @@ export function createSession(userId, req) {
     'INSERT INTO sessions (id, public_id, user_id, created_at, expires_at, last_used_at, ip, user_agent) VALUES (?,?,?,?,?,?,?,?)',
     sha256(token), randomToken(9), userId, t, t + config.sessionDays * DAY, t, clientIp(req), String(req.headers['user-agent'] || '').slice(0, 200),
   );
+  run('UPDATE users SET last_seen_at = ? WHERE id = ?', t, userId);
   return token;
 }
 

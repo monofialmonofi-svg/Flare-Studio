@@ -1,11 +1,52 @@
-<div align="center">
+# LAMMA | لَمّة — «كل لحظاتنا في مكان واحد»
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+منصة تواصل اجتماعي عربية (RTL، Mobile-first) لمشاركة الصور والفيديوهات والتفاعل معها. تعمل من المتصفح على الهاتف والكمبيوتر، وبنيتها جاهزة للتحويل لاحقًا إلى Android/iOS.
 
-  <h1>Built with AI Studio</h2>
+## التشغيل
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+```bash
+npm install
+npm start                  # http://localhost:3000
+npm run make-admin -- you@example.com   # ترقية حساب موجود إلى مسؤول (ثم افتح /admin)
+npm test                   # 34 اختبار تكامل للـAPI (ملفات حقيقية: صور وفيديو عبر ffmpeg)
+npm run test:e2e           # 29 خطوة بمتصفح حقيقي (Playwright)
+```
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+المتطلبات: Node ≥ 22.13، و`ffmpeg`/`ffprobe` في PATH لرفع الفيديو (بدونهما يعمل كل شيء عدا الفيديو).
 
-</div>
+### الإعدادات (متغيرات بيئة)
+| المتغير | الوصف | الافتراضي |
+|---|---|---|
+| `PORT`, `APP_URL` | المنفذ وعنوان الموقع (يُستخدم في روابط البريد) | 3000 |
+| `DATA_DIR` | مكان قاعدة البيانات والوسائط | `./data` |
+| `NODE_ENV=production` | يفعّل الكوكي Secure و HSTS وإلزام تأكيد البريد | — |
+| `REQUIRE_VERIFIED_EMAIL` | منع النشر والتعليق قبل تأكيد البريد | `true` في الإنتاج |
+| `SMTP_URL`, `MAIL_FROM` | إرسال البريد فعليًا (nodemailer). بدونه تُحفظ الرسائل في جدول `outbox` وتُطبع في السجل (وضع التطوير) | — |
+| `ADMIN_EMAIL` | البريد الذي يصبح مسؤولًا **بعد تأكيده** | — |
+| `MEDIA_BASE_URL` | عنوان الوسائط (ضع عنوان CDN هنا) | `/media` |
+| `MAX_IMAGE_MB`, `MAX_VIDEO_MB`, `MAX_VIDEO_SECONDS` | حدود الرفع | 15 / 200 / 600 |
+| `TRUST_PROXY` | عند التشغيل خلف Nginx/Cloudflare | — |
+
+## البنية
+```
+server/   Express + SQLite (node:sqlite, WAL, FK, triggers للعدّادات)
+  routes/ auth · users · posts · feed(+explore/search) · notifications · reports · admin
+  media.js    تحقق من المحتوى الحقيقي، صور→3 أحجام WebP، فيديو→MP4 H.264 + faststart + غلاف
+  storage.js  طبقة تخزين (قرص محلي الآن؛ الواجهة جاهزة لـS3/R2 + CDN)
+public/   SPA بدون خطوات بناء (ES modules) + لوحة الإدارة /admin
+tests/    API (node:test) + e2e (Playwright)
+```
+- **الوسائط خارج قاعدة البيانات**: القاعدة تحتفظ بمفاتيح الملفات فقط، والملفات بأسماء عشوائية وكاش `immutable` ودعم `Range` للفيديو.
+- **API-first**: يقبل أيضًا `Authorization: Bearer` (أرسل `X-Client: native` عند الدخول لتحصل على token) — جاهز لتطبيقات الجوال؛ والواجهة فيها `manifest.webmanifest` للـPWA أو التغليف بـCapacitor.
+- **i18n**: النص العربي هو المفتاح (`t('…')`)؛ إضافة الإنجليزية = تسجيل قاموس + `setLocale('en')` والاتجاه يتبدّل تلقائيًا.
+
+## الأمان المطبَّق (ومُختبَر)
+scrypt لكلمات المرور · جلسات عشوائية مُهشَّرة في DB وتُبطَل من الخادم · كوكي HttpOnly/SameSite · فحص Origin ضد CSRF · قفل بعد 5 محاولات دخول فاشلة · رموز تأكيد/استعادة لمرة واحدة · التحقق من محتوى الملفات (لا الامتداد) وحدود الحجم والعدد · حذف EXIF · CSP صارم · عرض كل نص مستخدم كـtext nodes (لا `innerHTML`) · صلاحيات الأدمن في الخادم (`requireAdmin`) مع سجل تدقيق · حظر/إبلاغ/حذف الحساب مع حذف ملفاته.
+
+## حدود هذه النسخة (بصراحة)
+- **البريد**: لا يوجد SMTP مضبوط افتراضيًا؛ أضف `SMTP_URL` لإرسال التأكيد/الاستعادة فعليًا (لم يُختبر مع مزوّد حقيقي).
+- **قاعدة البيانات**: SQLite لعملية واحدة. عند الحاجة لعدة خوادم: انقل `server/db.js` إلى PostgreSQL (الاستعلامات SQL قياسي تقريبًا).
+- **التخزين**: القرص المحلي فقط؛ لم يُنفَّذ سائق S3 (الواجهة جاهزة). معالجة الفيديو متزامنة داخل طلب الرفع (حدّ 2 متوازية)؛ للإنتاج الكبير انقلها إلى طابور.
+- محدّد المعدل في الذاكرة (يحتاج Redis عند التوسّع الأفقي). البحث بـ`LIKE` (لا FTS ولا تطبيع عربي للتشكيل/الألف).
+- GIF يُحوَّل لإطار ثابت. لا رسائل خاصة، ولا حسابات خاصة، ولا مصادقة ثنائية، ولا إشعارات دفع (الإشعارات داخل التطبيق مع استطلاع كل 45 ثانية).
+- لم يُختبر على Safari/iOS وأجهزة حقيقية (اختُبر على Chromium بمقاسات 320/390/820/1360).

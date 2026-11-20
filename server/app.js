@@ -28,8 +28,8 @@ export function createApp() {
       directives: {
         'default-src': ["'self'"],
         'script-src': ["'self'"],
-        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        'style-src': ["'self'", "'unsafe-inline'"],
+        'font-src': ["'self'"],
         'img-src': ["'self'", 'data:', 'blob:', ...(mediaOrigin ? [mediaOrigin] : [])],
         'media-src': ["'self'", 'blob:', ...(mediaOrigin ? [mediaOrigin] : [])],
         'connect-src': ["'self'"],
