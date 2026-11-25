@@ -1,0 +1,12 @@
+node_modules
+data
+tests
+docs
+.git
+.gitignore
+.env
+*.log
+test-results
+Dockerfile
+.dockerignore
+README.md
